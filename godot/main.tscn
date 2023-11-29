@@ -1,18 +1,44 @@
-[gd_scene load_steps=4 format=3 uid="uid://ck12vqrx5u7se"]
+[gd_scene load_steps=7 format=3 uid="uid://ck12vqrx5u7se"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_l7c0q"]
-[ext_resource type="PackedScene" uid="uid://vai56l0c21wk" path="res://models/furina/Furina.vrm" id="1_x5s2k"]
-[ext_resource type="AudioStream" uid="uid://cf712qrxps4we" path="res://assets/audio/hoshino_talks.ogg" id="3_1s7q4"]
+[ext_resource type="AudioStream" uid="uid://n81q8v6fffkp" path="res://assets/audio/hoshino_talks.wav" id="3_c38ej"]
+[ext_resource type="PackedScene" uid="uid://rmiw2dvuuow7" path="res://models/furina/furina.tscn" id="3_wxnte"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_pkeos"]
+
+[sub_resource type="Sky" id="Sky_rxnka"]
+sky_material = SubResource("ProceduralSkyMaterial_pkeos")
+
+[sub_resource type="Environment" id="Environment_tsai3"]
+background_mode = 2
+sky = SubResource("Sky_rxnka")
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_l7c0q")
 
-[node name="Furina" parent="." instance=ExtResource("1_x5s2k")]
-
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_1s7q4")
+stream = ExtResource("3_c38ej")
 
 [node name="LipSync" type="LipSync" parent="."]
 
+[node name="Furina" parent="." instance=ExtResource("3_wxnte")]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.37093, 0.136227)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_tsai3")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="StartTalking" type="Button" parent="CanvasLayer"]
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Start Talking"
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.927973, 0.372648, 0, -0.372648, 0.927973, 0, 2.74551, 2.78346)
+
 [connection signal="panicked" from="LipSync" to="." method="_on_lip_sync_panicked"]
 [connection signal="updated" from="LipSync" to="." method="_on_lip_sync_updated"]
+[connection signal="pressed" from="CanvasLayer/StartTalking" to="." method="_on_start_talking_pressed"]

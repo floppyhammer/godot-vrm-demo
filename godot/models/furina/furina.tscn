@@ -6,10 +6,10 @@
 [node name="Furina" instance=ExtResource("1_a6c1m")]
 
 [node name="GeneralSkeleton" parent="." index="0"]
-bones/0/position = Vector3(-0.0307625, 0.932927, -0.0163107)
+bones/0/position = Vector3(0, 0.885954, -0.215238)
 
 [node name="Head" parent="GeneralSkeleton" index="5"]
-transform = Transform3D(0.990925, 0.0328043, -0.13035, -0.0330111, 0.999455, 0.000574156, 0.130298, 0.00373406, 0.991468, -0.0138991, 1.3398, -0.0293364)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.4551e-08, 1.2931, -0.230121)
 
 [node name="AnimationPlayer2" type="AnimationPlayer" parent="." index="3"]
 libraries = {
