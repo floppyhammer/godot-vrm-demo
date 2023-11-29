@@ -29,20 +29,26 @@ func _on_lip_sync_panicked(error: String):
 
 
 func _on_lip_sync_updated(output: Dictionary):
-	$Furina/AnimationPlayer.play("RESET")
+	$AvatarSample_A/AnimationPlayer.play("RESET")
 	
 	match output["vowel"]:
 		0:
-			$Furina/AnimationPlayer.play("aa", output["amount"])
+			$AvatarSample_A/AnimationPlayer.play("aa", output["amount"])
+			$CanvasLayer/Estimate.text = "A"
 		1:
-			$Furina/AnimationPlayer.play("ih", output["amount"])
+			$AvatarSample_A/AnimationPlayer.play("ih", output["amount"])
+			$CanvasLayer/Estimate.text = "E"
 		2:
-			$Furina/AnimationPlayer.play("ou", output["amount"])
+			$AvatarSample_A/AnimationPlayer.play("ou", output["amount"])
+			$CanvasLayer/Estimate.text = "U"
 		3:
-			$Furina/AnimationPlayer.play("ee", output["amount"])
+			$AvatarSample_A/AnimationPlayer.play("ee", output["amount"])
+			$CanvasLayer/Estimate.text = "E"
 		4:
-			$Furina/AnimationPlayer.play("oh", output["amount"])
-	print(output)
+			$AvatarSample_A/AnimationPlayer.play("oh", output["amount"])
+			$CanvasLayer/Estimate.text = "O"
+	
+	$CanvasLayer/Estimate.text += ": " + str(output["amount"])
 
 
 # reference (https://godotengine.org/qa/67091/how-to-read-audio-samples-as-1-1-floats) 
@@ -51,12 +57,15 @@ static func read_16bit_samples(stream: AudioStreamWAV, time: float, duration: fl
 	var bytes = stream.data
 	var samples: Array[float] = []
 	
-	var sampling_start = time * stream.mix_rate * 2 * 2
-	var sampling_end = sampling_start + duration * stream.mix_rate * 2 * 2
+	var is_stereo = stream.is_stereo()
+	var channel_count = 2 if is_stereo else 1
+	
+	var sampling_start = time * stream.mix_rate * 2 * channel_count
+	var sampling_end = sampling_start + duration * stream.mix_rate * 2 * channel_count
 	
 	var i = sampling_start
 	
-	# Read by packs of 2 bytes
+	# Read by packs of 2 + 2 bytes
 	while i < len(bytes) and i < sampling_end:
 		var b0 = bytes[i]
 		var b1 = bytes[i + 1]
@@ -67,7 +76,9 @@ static func read_16bit_samples(stream: AudioStreamWAV, time: float, duration: fl
 		# Convert to -1..1 range
 		var s = float(u - 32768) / 32768.0
 		samples.append(s)
-		i += 2
+		# 16-bit and stereo
+		i += 2 * channel_count
+
 	return samples
 
 

@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://8b0dy42ts41"]
+
+[ext_resource type="PackedScene" uid="uid://cgyycnlyufr73" path="res://models/AvatarSample_A/AvatarSample_A.vrm" id="1_bf6yx"]
+
+[node name="AvatarSample_A" instance=ExtResource("1_bf6yx")]
+
+[node name="Head" parent="GeneralSkeleton" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.10204e-05, 1.35168, -0.00509328)

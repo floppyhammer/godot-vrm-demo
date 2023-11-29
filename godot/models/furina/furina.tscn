@@ -9,7 +9,7 @@
 bones/0/position = Vector3(0, 0.885954, -0.215238)
 
 [node name="Head" parent="GeneralSkeleton" index="5"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.4551e-08, 1.2931, -0.230121)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.4551e-08, 1.29311, -0.230122)
 
 [node name="AnimationPlayer2" type="AnimationPlayer" parent="." index="3"]
 libraries = {

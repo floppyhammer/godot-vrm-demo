@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://ck12vqrx5u7se"]
+[gd_scene load_steps=8 format=3 uid="uid://ck12vqrx5u7se"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_l7c0q"]
 [ext_resource type="AudioStream" uid="uid://n81q8v6fffkp" path="res://assets/audio/hoshino_talks.wav" id="3_c38ej"]
 [ext_resource type="PackedScene" uid="uid://rmiw2dvuuow7" path="res://models/furina/furina.tscn" id="3_wxnte"]
+[ext_resource type="PackedScene" uid="uid://8b0dy42ts41" path="res://models/AvatarSample_A/avatar_sample_a.tscn" id="4_cjt65"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_pkeos"]
 
@@ -22,9 +23,11 @@ stream = ExtResource("3_c38ej")
 [node name="LipSync" type="LipSync" parent="."]
 
 [node name="Furina" parent="." instance=ExtResource("3_wxnte")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.215)
+visible = false
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.37093, 0.136227)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35909, 0.484272)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_tsai3")
@@ -36,8 +39,16 @@ offset_right = 8.0
 offset_bottom = 8.0
 text = "Start Talking"
 
+[node name="Estimate" type="Label" parent="CanvasLayer"]
+offset_left = 8.0
+offset_top = 49.0
+offset_right = 48.0
+offset_bottom = 72.0
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.927973, 0.372648, 0, -0.372648, 0.927973, 0, 2.74551, 2.78346)
+
+[node name="AvatarSample_A" parent="." instance=ExtResource("4_cjt65")]
 
 [connection signal="panicked" from="LipSync" to="." method="_on_lip_sync_panicked"]
 [connection signal="updated" from="LipSync" to="." method="_on_lip_sync_updated"]
