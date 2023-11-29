@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://rmiw2dvuuow7"]
+
+[ext_resource type="PackedScene" uid="uid://vai56l0c21wk" path="res://models/furina/Furina.vrm" id="1_a6c1m"]
+[ext_resource type="AnimationLibrary" uid="uid://dtcculwn2l83e" path="res://models/sophia/sophia.glb" id="7_1ndoq"]
+
+[node name="Furina" instance=ExtResource("1_a6c1m")]
+
+[node name="GeneralSkeleton" parent="." index="0"]
+bones/0/position = Vector3(-0.0307625, 0.932927, -0.0163107)
+
+[node name="Head" parent="GeneralSkeleton" index="5"]
+transform = Transform3D(0.990925, 0.0328043, -0.13035, -0.0330111, 0.999455, 0.000574156, 0.130298, 0.00373406, 0.991468, -0.0138991, 1.3398, -0.0293364)
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="." index="3"]
+libraries = {
+"sophia": ExtResource("7_1ndoq")
+}

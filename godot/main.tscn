@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://ck12vqrx5u7se"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_l7c0q"]
+[ext_resource type="PackedScene" uid="uid://vai56l0c21wk" path="res://models/furina/Furina.vrm" id="1_x5s2k"]
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_l7c0q")
+
+[node name="Furina" parent="." instance=ExtResource("1_x5s2k")]
