@@ -3,16 +3,23 @@ extends Node3D
 @onready var lip_sync = $LipSync
 var is_talking = false
 var playing_time = 0
-const SAMPLE_INTERVAL = 0.2
+const SAMPLE_INTERVAL = 0.1
 var last_time_updated = 0
+
+var precision_threshold = 0.8
+
+@export var target_avatar_path: NodePath
+var target_avatar: Node
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	target_avatar = get_node(target_avatar_path)
 
 
 func _process(delta):
+	$CanvasLayer/Fps.text = "FPS: " + str(Engine.get_frames_per_second())
+	
 	if is_talking:
 		if (playing_time - last_time_updated) > SAMPLE_INTERVAL:
 			var audio_data = read_16bit_samples($AudioStreamPlayer.stream, playing_time, SAMPLE_INTERVAL)
@@ -29,26 +36,36 @@ func _on_lip_sync_panicked(error: String):
 
 
 func _on_lip_sync_updated(output: Dictionary):
-	$AvatarSample_A/AnimationPlayer.play("RESET")
+	if target_avatar == null:
+		return
+		
+	var anim_player: AnimationPlayer = target_avatar.get_node("AnimationPlayer")
 	
-	match output["vowel"]:
-		0:
-			$AvatarSample_A/AnimationPlayer.play("aa", output["amount"])
-			$CanvasLayer/Estimate.text = "A"
-		1:
-			$AvatarSample_A/AnimationPlayer.play("ih", output["amount"])
-			$CanvasLayer/Estimate.text = "E"
-		2:
-			$AvatarSample_A/AnimationPlayer.play("ou", output["amount"])
-			$CanvasLayer/Estimate.text = "U"
-		3:
-			$AvatarSample_A/AnimationPlayer.play("ee", output["amount"])
-			$CanvasLayer/Estimate.text = "E"
-		4:
-			$AvatarSample_A/AnimationPlayer.play("oh", output["amount"])
-			$CanvasLayer/Estimate.text = "O"
-	
-	$CanvasLayer/Estimate.text += ": " + str(output["amount"])
+	if output["amount"] > precision_threshold:
+		var transition_time = 0
+		
+		match output["vowel"]:
+			0:
+				anim_player.play("aa", transition_time)
+				$CanvasLayer/Estimate.text = "A"
+			1:
+				anim_player.play("ih", transition_time)
+				$CanvasLayer/Estimate.text = "E"
+			2:
+				anim_player.play("ou", transition_time)
+				$CanvasLayer/Estimate.text = "U"
+			3:
+				anim_player.play("ee", transition_time)
+				$CanvasLayer/Estimate.text = "E"
+			4:
+				anim_player.play("oh", transition_time)
+				$CanvasLayer/Estimate.text = "O"
+		
+		$CanvasLayer/Estimate.text += ": %.2f" % output["amount"]
+	else:
+		anim_player.play("custom/reset_morph")
+		#anim_player.advance(0)
+		$CanvasLayer/Estimate.text = "_"
 
 
 # reference (https://godotengine.org/qa/67091/how-to-read-audio-samples-as-1-1-floats) 
@@ -60,8 +77,8 @@ static func read_16bit_samples(stream: AudioStreamWAV, time: float, duration: fl
 	var is_stereo = stream.is_stereo()
 	var channel_count = 2 if is_stereo else 1
 	
-	var sampling_start = time * stream.mix_rate * 2 * channel_count
-	var sampling_end = sampling_start + duration * stream.mix_rate * 2 * channel_count
+	var sampling_start: int = round(time * stream.mix_rate * 2 * channel_count)
+	var sampling_end: int = sampling_start + round(duration * stream.mix_rate * 2 * channel_count)
 	
 	var i = sampling_start
 	
