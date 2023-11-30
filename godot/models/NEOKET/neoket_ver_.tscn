@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://bbjovavx8l0y8"]
+
+[ext_resource type="PackedScene" uid="uid://ds6eaclr7yb4u" path="res://models/NEOKET/NEOKET ver-.vrm" id="1_stdug"]
+[ext_resource type="AnimationLibrary" uid="uid://dtcculwn2l83e" path="res://models/sophia/sophia.glb" id="2_vbmxm"]
+
+[node name="NEOKET ver-" instance=ExtResource("1_stdug")]
+
+[node name="Head" parent="GeneralSkeleton" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.41715e-08, 1.43372, -0.0240703)
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="." index="3"]
+libraries = {
+"sophia": ExtResource("2_vbmxm")
+}
+autoplay = "sophia/EdgeGrab"

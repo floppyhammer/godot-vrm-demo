@@ -544,9 +544,29 @@ func _create_animation_player(animplayer: AnimationPlayer, vrm_extension: Dictio
 
 	var reset_anim = Animation.new()
 	reset_anim.resource_name = "RESET"
+	
+	# Collect morph keys.
+	var neutral_anim = Animation.new()
+	neutral_anim.resource_name = "reset_morph"
+	var morph_keys = []
+	for shape in blend_shape_groups:
+		if shape["name"] in ["A", "I", "U", "E", "O"]:
+			for bind in shape["binds"]:
+				morph_keys.append(bind["index"])
+				
+				var node: ImporterMeshInstance3D = mesh_idx_to_meshinstance[int(bind["mesh"])]
+				var nodeMesh: ImporterMesh = node.mesh
+				
+				var anim_track: int = neutral_anim.add_track(Animation.TYPE_BLEND_SHAPE)
+				neutral_anim.track_set_path(anim_track, str(animplayer.get_parent().get_path_to(node)) + ":" + str(nodeMesh.get_blend_shape_name(int(bind["index"]))))
+				neutral_anim.track_insert_key(anim_track, 0.0, 0.0)
+	
+	animation_library.add_animation("reset_morph", neutral_anim)
+	
+	print("All lip keys: ", morph_keys)
 
 	for shape in blend_shape_groups:
-		#print("Blend shape group: " + shape["name"])
+		print("Blend shape group: " + shape["name"])
 		var anim = Animation.new()
 
 		for matbind in shape["materialValues"]:
@@ -584,6 +604,7 @@ func _create_animation_player(animplayer: AnimationPlayer, vrm_extension: Dictio
 				reset_anim.track_set_path(animtrack, str(animplayer.get_parent().get_path_to(node)) + ":mesh:surface_" + str(surface_idx) + "/material:" + paramprop)
 				reset_anim.track_set_interpolation_type(animtrack, Animation.INTERPOLATION_NEAREST if bool(shape["isBinary"]) else Animation.INTERPOLATION_LINEAR)
 				reset_anim.track_insert_key(animtrack, 0.0, origvalue)
+		print(shape["binds"])
 		for bind in shape["binds"]:
 			# FIXME: Is this a mesh_idx or a node_idx???
 			var node: ImporterMeshInstance3D = mesh_idx_to_meshinstance[int(bind["mesh"])]
@@ -592,13 +613,27 @@ func _create_animation_player(animplayer: AnimationPlayer, vrm_extension: Dictio
 			if bind["index"] < 0 || bind["index"] >= nodeMesh.get_blend_shape_count():
 				printerr("Invalid blend shape index in bind " + str(shape) + " for mesh " + str(node.name))
 				continue
-			var animtrack: int = anim.add_track(Animation.TYPE_BLEND_SHAPE)
-			# nodeMesh.set_blend_shape_name(int(bind["index"]), shape["name"] + "_" + str(bind["index"]))
-			anim.track_set_path(animtrack, str(animplayer.get_parent().get_path_to(node)) + ":" + str(nodeMesh.get_blend_shape_name(int(bind["index"]))))
+			
+			#nodeMesh.set_blend_shape_name(int(bind["index"]), shape["name"] + "_" + str(bind["index"]))
+			
+
 			var interpolation: int = Animation.INTERPOLATION_LINEAR
 			if shape.has("isBinary") and bool(shape["isBinary"]):
 				interpolation = Animation.INTERPOLATION_NEAREST
+			
+			# Add other keys as zero.
+			if shape["name"] in ["A", "I", "U", "E", "O"]:
+				for morph_key in morph_keys:
+					if morph_key != bind["index"]:
+						var animtrack2: int = anim.add_track(Animation.TYPE_BLEND_SHAPE)
+						anim.track_set_path(animtrack2, str(animplayer.get_parent().get_path_to(node)) + ":" + str(nodeMesh.get_blend_shape_name(int(morph_key))))
+						anim.track_set_interpolation_type(animtrack2, interpolation)
+						anim.track_insert_key(animtrack2, 0.0, 0.0)
+						
+			var animtrack: int = anim.add_track(Animation.TYPE_BLEND_SHAPE)
+			anim.track_set_path(animtrack, str(animplayer.get_parent().get_path_to(node)) + ":" + str(nodeMesh.get_blend_shape_name(int(bind["index"]))))
 			anim.track_set_interpolation_type(animtrack, interpolation)
+			
 			# FIXME: Godot has weird normal/tangent singularities at weight=1.0 or weight=0.5
 			# So we multiply by 0.99999 to produce roughly the same output, avoiding these singularities.
 			anim.track_insert_key(animtrack, 0.0, 0.99999 * float(bind["weight"]) / 100.0)

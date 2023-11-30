@@ -1,15 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://diy617qt0twwx"]
+[gd_scene load_steps=3 format=3 uid="uid://diy617qt0twwx"]
 
 [ext_resource type="Script" path="res://Avatar.gd" id="1_kwkwm"]
 [ext_resource type="PackedScene" uid="uid://rmiw2dvuuow7" path="res://models/furina/furina.tscn" id="2_uqiqf"]
-[ext_resource type="AnimationLibrary" uid="uid://dtcculwn2l83e" path="res://models/sophia/sophia.glb" id="3_talua"]
 
 [node name="Avatar" type="Node3D"]
 script = ExtResource("1_kwkwm")
 
 [node name="Furina" parent="." instance=ExtResource("2_uqiqf")]
-
-[node name="AnimationPlayer3s" type="AnimationPlayer" parent="Furina"]
-libraries = {
-"sophia": ExtResource("3_talua")
-}

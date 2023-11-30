@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://ck12vqrx5u7se"]
+[gd_scene load_steps=9 format=3 uid="uid://ck12vqrx5u7se"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_l7c0q"]
 [ext_resource type="AudioStream" uid="uid://78cy352wxldg" path="res://assets/audio/桔梗.wav" id="2_v8b56"]
 [ext_resource type="PackedScene" uid="uid://rmiw2dvuuow7" path="res://models/furina/furina.tscn" id="3_wxnte"]
 [ext_resource type="PackedScene" uid="uid://8b0dy42ts41" path="res://models/AvatarSample_A/avatar_sample_a.tscn" id="4_cjt65"]
+[ext_resource type="PackedScene" uid="uid://bbjovavx8l0y8" path="res://models/NEOKET/neoket_ver_.tscn" id="5_djl0h"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_pkeos"]
 
@@ -16,7 +17,7 @@ sky = SubResource("Sky_rxnka")
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_l7c0q")
-target_avatar_path = NodePath("Furina")
+target_avatar_path = NodePath("NEOKET ver-")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_v8b56")
@@ -25,9 +26,11 @@ stream = ExtResource("2_v8b56")
 
 [node name="Furina" parent="." instance=ExtResource("3_wxnte")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.215)
+visible = false
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35909, 0.484272)
+current = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_tsai3")
@@ -60,6 +63,8 @@ transform = Transform3D(1, 0, 0, 0, 0.927973, 0.372648, 0, -0.372648, 0.927973, 
 visible = false
 
 [node name="UpdateTimer" type="Timer" parent="."]
+
+[node name="NEOKET ver-" parent="." instance=ExtResource("5_djl0h")]
 
 [connection signal="panicked" from="LipSync" to="." method="_on_lip_sync_panicked"]
 [connection signal="updated" from="LipSync" to="." method="_on_lip_sync_updated"]

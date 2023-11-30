@@ -6,7 +6,7 @@ var playing_time = 0
 const SAMPLE_INTERVAL = 0.1
 var last_time_updated = 0
 
-var precision_threshold = 0.8
+var precision_threshold = 0.7
 
 @export var target_avatar_path: NodePath
 var target_avatar: Node
@@ -41,9 +41,9 @@ func _on_lip_sync_updated(output: Dictionary):
 		
 	var anim_player: AnimationPlayer = target_avatar.get_node("AnimationPlayer")
 	
+	var transition_time = 0
+	
 	if output["amount"] > precision_threshold:
-		var transition_time = 0
-		
 		match output["vowel"]:
 			0:
 				anim_player.play("aa", transition_time)
@@ -63,7 +63,7 @@ func _on_lip_sync_updated(output: Dictionary):
 		
 		$CanvasLayer/Estimate.text += ": %.2f" % output["amount"]
 	else:
-		anim_player.play("custom/reset_morph")
+		anim_player.play("reset_morph", transition_time)
 		#anim_player.advance(0)
 		$CanvasLayer/Estimate.text = "_"
 
@@ -83,7 +83,7 @@ static func read_16bit_samples(stream: AudioStreamWAV, time: float, duration: fl
 	var i = sampling_start
 	
 	# Read by packs of 2 + 2 bytes
-	while i < len(bytes) and i < sampling_end:
+	while (i + 1) < len(bytes) and i < sampling_end:
 		var b0 = bytes[i]
 		var b1 = bytes[i + 1]
 		# Combine low bits and high bits to obtain 16-bit value
