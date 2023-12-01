@@ -41,7 +41,7 @@ func _on_lip_sync_updated(output: Dictionary):
 		
 	var anim_player: AnimationPlayer = target_avatar.get_node("AnimationPlayer")
 	
-	var transition_time = 0
+	var transition_time = 0.1
 	
 	if output["amount"] > precision_threshold:
 		match output["vowel"]:

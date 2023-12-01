@@ -1,9 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://diy617qt0twwx"]
-
-[ext_resource type="Script" path="res://Avatar.gd" id="1_kwkwm"]
-[ext_resource type="PackedScene" uid="uid://rmiw2dvuuow7" path="res://models/furina/furina.tscn" id="2_uqiqf"]
-
-[node name="Avatar" type="Node3D"]
-script = ExtResource("1_kwkwm")
-
-[node name="Furina" parent="." instance=ExtResource("2_uqiqf")]

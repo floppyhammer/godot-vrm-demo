@@ -32,7 +32,7 @@ import_script/path=""
 _subresources={
 "animations": {
 "aa": {
-"save_to_file/enabled": true,
+"save_to_file/enabled": false,
 "save_to_file/keep_custom_tracks": true,
 "save_to_file/path": "res://anims/furina_aa.res",
 "settings/loop_mode": 0,
@@ -1831,7 +1831,7 @@ _subresources={
 "slices/amount": 0
 },
 "ee": {
-"save_to_file/enabled": true,
+"save_to_file/enabled": false,
 "save_to_file/keep_custom_tracks": true,
 "save_to_file/path": "res://anims/furina_ee.res",
 "settings/loop_mode": 0,
@@ -3630,7 +3630,7 @@ _subresources={
 "slices/amount": 0
 },
 "ih": {
-"save_to_file/enabled": true,
+"save_to_file/enabled": false,
 "save_to_file/keep_custom_tracks": true,
 "save_to_file/path": "res://anims/furina_ih.res",
 "settings/loop_mode": 0,
@@ -5429,7 +5429,7 @@ _subresources={
 "slices/amount": 0
 },
 "oh": {
-"save_to_file/enabled": true,
+"save_to_file/enabled": false,
 "save_to_file/keep_custom_tracks": true,
 "save_to_file/path": "res://anims/furina_oh.res",
 "settings/loop_mode": 0,
@@ -7228,7 +7228,7 @@ _subresources={
 "slices/amount": 0
 },
 "ou": {
-"save_to_file/enabled": true,
+"save_to_file/enabled": false,
 "save_to_file/keep_custom_tracks": true,
 "save_to_file/path": "res://anims/furina_ou.res",
 "settings/loop_mode": 0,

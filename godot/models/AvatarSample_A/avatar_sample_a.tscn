@@ -1,8 +1,18 @@
-[gd_scene load_steps=2 format=3 uid="uid://8b0dy42ts41"]
+[gd_scene load_steps=3 format=3 uid="uid://8b0dy42ts41"]
 
 [ext_resource type="PackedScene" uid="uid://cgyycnlyufr73" path="res://models/AvatarSample_A/AvatarSample_A.vrm" id="1_bf6yx"]
+[ext_resource type="AnimationLibrary" uid="uid://dtcculwn2l83e" path="res://models/sophia/sophia.glb" id="2_l0bs7"]
 
 [node name="AvatarSample_A" instance=ExtResource("1_bf6yx")]
 
+[node name="GeneralSkeleton" parent="." index="0"]
+bones/1/position = Vector3(0, 0.829056, -0.203201)
+
 [node name="Head" parent="GeneralSkeleton" index="4"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.10204e-05, 1.35168, -0.00509328)
+transform = Transform3D(1, -4.572e-14, 1.0656e-13, 5.49597e-14, 0.996086, -0.0883887, -1.02102e-13, 0.0883887, 0.996086, 4.56221e-08, 1.28432, -0.198528)
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="." index="4"]
+libraries = {
+"sophia": ExtResource("2_l0bs7")
+}
+autoplay = "sophia/EdgeGrab"
