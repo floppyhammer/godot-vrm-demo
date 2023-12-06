@@ -99,11 +99,6 @@ static func read_16bit_samples(stream: AudioStreamWAV, time: float, duration: fl
 	return samples
 
 
-func _on_start_talking_pressed():
-	is_talking = true
-	$AudioStreamPlayer.play()
-
-
 func _on_lip_sync_vowel_estimated(vowel, amount):
 	if target_avatar == null:
 		return
@@ -131,3 +126,14 @@ func _on_lip_sync_vowel_estimated(vowel, amount):
 
 func _on_audio_stream_player_finished():
 	is_talking = false
+	$CanvasLayer/PlayRust.text = "Play (Rust)"
+
+
+func _on_play_rust_pressed():
+	is_talking = !is_talking
+	if is_talking:
+		$CanvasLayer/PlayRust.text = "Stop"
+		$AudioStreamPlayer.play()
+	else:
+		$CanvasLayer/PlayRust.text = "Play (Rust)"
+		$AudioStreamPlayer.stop()

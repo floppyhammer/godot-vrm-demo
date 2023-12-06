@@ -51,10 +51,10 @@ stream = ExtResource("2_v8b56")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="StartTalking" type="Button" parent="CanvasLayer"]
+[node name="PlayRust" type="Button" parent="CanvasLayer"]
 offset_right = 8.0
 offset_bottom = 8.0
-text = "Start Talking"
+text = "Play (Rust)"
 
 [node name="Estimate" type="Label" parent="CanvasLayer"]
 offset_left = 8.0
@@ -88,4 +88,4 @@ visible = false
 [connection signal="panicked" from="LipSyncRs" to="." method="_on_lip_sync_rs_panicked"]
 [connection signal="updated" from="LipSyncRs" to="." method="_on_lip_sync_rs_updated"]
 [connection signal="vowel_estimated" from="LipSync" to="." method="_on_lip_sync_vowel_estimated"]
-[connection signal="pressed" from="CanvasLayer/StartTalking" to="." method="_on_start_talking_pressed"]
+[connection signal="pressed" from="CanvasLayer/PlayRust" to="." method="_on_play_rust_pressed"]
