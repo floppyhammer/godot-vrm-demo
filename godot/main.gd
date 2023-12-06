@@ -1,6 +1,6 @@
 extends Node3D
 
-@onready var lip_sync = $LipSync
+@onready var lip_sync_rs = $LipSyncRs
 var is_talking = false
 var playing_time = 0
 const SAMPLE_INTERVAL = 0.1
@@ -23,22 +23,22 @@ func _process(delta):
 	if is_talking:
 		if (playing_time - last_time_updated) > SAMPLE_INTERVAL:
 			var audio_data = read_16bit_samples($AudioStreamPlayer.stream, playing_time, SAMPLE_INTERVAL)
-			lip_sync.update(audio_data)
+			lip_sync_rs.update(audio_data)
 			last_time_updated = playing_time
 		
 		playing_time += delta
 	
-	lip_sync.poll()
+	lip_sync_rs.poll()
 
 
-func _on_lip_sync_panicked(error: String):
+func _on_lip_sync_rs_panicked(error: String):
 	print(error)
 
 
-func _on_lip_sync_updated(output: Dictionary):
+func _on_lip_sync_rs_updated(output: Dictionary):
 	if target_avatar == null:
 		return
-		
+	
 	var anim_player: AnimationPlayer = target_avatar.get_node("AnimationPlayer")
 	
 	var transition_time = 0.1
@@ -102,3 +102,32 @@ static func read_16bit_samples(stream: AudioStreamWAV, time: float, duration: fl
 func _on_start_talking_pressed():
 	is_talking = true
 	$AudioStreamPlayer.play()
+
+
+func _on_lip_sync_vowel_estimated(vowel, amount):
+	if target_avatar == null:
+		return
+		
+	var anim_player: AnimationPlayer = target_avatar.get_node("AnimationPlayer")
+	
+	var transition_time = 0.1
+	
+	if amount > precision_threshold:
+		match vowel:
+			0:
+				anim_player.play("aa", transition_time)
+			1:
+				anim_player.play("ih", transition_time)
+			2:
+				anim_player.play("ou", transition_time)
+			3:
+				anim_player.play("ee", transition_time)
+			4:
+				anim_player.play("oh", transition_time)
+		
+	else:
+		anim_player.play("reset_morph", transition_time)
+
+
+func _on_audio_stream_player_finished():
+	is_talking = false

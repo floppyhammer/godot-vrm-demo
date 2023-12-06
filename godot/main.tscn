@@ -1,18 +1,23 @@
-[gd_scene load_steps=8 format=3 uid="uid://ck12vqrx5u7se"]
+[gd_scene load_steps=11 format=3 uid="uid://ck12vqrx5u7se"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_l7c0q"]
 [ext_resource type="AudioStream" uid="uid://78cy352wxldg" path="res://assets/audio/桔梗.wav" id="2_v8b56"]
+[ext_resource type="Texture2D" uid="uid://d15v1xb7gmnj5" path="res://assets/images/AllSkyFree_Sky_EpicGloriousPink_Equirect.jpg" id="3_e408c"]
+[ext_resource type="PackedScene" uid="uid://bua4tr0ep7amc" path="res://addons/lip_sync/lip_sync.tscn" id="3_y4wov"]
 [ext_resource type="PackedScene" uid="uid://8b0dy42ts41" path="res://models/AvatarSample_A/avatar_sample_a.tscn" id="4_cjt65"]
+[ext_resource type="PackedScene" uid="uid://ch07vsursokb2" path="res://models/sofa-combination/source/safa.glb" id="5_71p26"]
 [ext_resource type="PackedScene" uid="uid://bbjovavx8l0y8" path="res://models/NEOKET/neoket_ver_.tscn" id="5_djl0h"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_pkeos"]
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_axekh"]
+panorama = ExtResource("3_e408c")
 
 [sub_resource type="Sky" id="Sky_rxnka"]
-sky_material = SubResource("ProceduralSkyMaterial_pkeos")
+sky_material = SubResource("PanoramaSkyMaterial_axekh")
 
 [sub_resource type="Environment" id="Environment_tsai3"]
 background_mode = 2
 sky = SubResource("Sky_rxnka")
+sdfgi_enabled = true
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_l7c0q")
@@ -21,14 +26,30 @@ target_avatar_path = NodePath("NEOKET ver-")
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_v8b56")
 
-[node name="LipSync" type="LipSync" parent="."]
+[node name="LipSyncRs" type="LipSyncRs" parent="."]
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35909, 0.373627)
+transform = Transform3D(1, 0, 0, 0, 0.974311, 0.225206, 0, -0.225206, 0.974311, 0, 1.54692, 0.597006)
 current = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_tsai3")
+
+[node name="LipSync" parent="." instance=ExtResource("3_y4wov")]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -314.0
+offset_top = -307.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="AudioStreamWav" parent="LipSync" index="1"]
+stream = ExtResource("2_v8b56")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -52,13 +73,23 @@ offset_bottom = 23.0
 grow_horizontal = 0
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.927973, 0.372648, 0, -0.372648, 0.927973, 0, 2.74551, 2.78346)
+transform = Transform3D(-0.377639, -0.481861, 0.790695, 0.0104056, 0.851663, 0.523986, -0.925894, 0.206105, -0.316608, 0, 2.74551, -0.00684738)
+light_color = Color(1, 0.74902, 0, 1)
+shadow_enabled = true
 
 [node name="AvatarSample_A" parent="." instance=ExtResource("4_cjt65")]
 visible = false
 
 [node name="NEOKET ver-" parent="." instance=ExtResource("5_djl0h")]
 
-[connection signal="panicked" from="LipSync" to="." method="_on_lip_sync_panicked"]
-[connection signal="updated" from="LipSync" to="." method="_on_lip_sync_updated"]
+[node name="safa" parent="." instance=ExtResource("5_71p26")]
+transform = Transform3D(-0.01, 0, -8.74228e-10, 0, 0.01, 0, 8.74228e-10, 0, -0.01, 0, 0, 0.383307)
+visible = false
+
+[connection signal="finished" from="AudioStreamPlayer" to="." method="_on_audio_stream_player_finished"]
+[connection signal="panicked" from="LipSyncRs" to="." method="_on_lip_sync_rs_panicked"]
+[connection signal="updated" from="LipSyncRs" to="." method="_on_lip_sync_rs_updated"]
+[connection signal="vowel_estimated" from="LipSync" to="." method="_on_lip_sync_vowel_estimated"]
 [connection signal="pressed" from="CanvasLayer/StartTalking" to="." method="_on_start_talking_pressed"]
+
+[editable path="LipSync"]
