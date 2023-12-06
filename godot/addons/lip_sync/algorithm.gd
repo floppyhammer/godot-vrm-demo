@@ -29,7 +29,7 @@ static func array_normalize(sample_array: Array[float]):
 		vmin = min(vmin, sample_array[i])
 	
 	var diff: float = vmax - vmin
-	var d: float = 1.0 / diff if diff != 0 else 1.0
+	var d: float = 1.0 / diff if diff != 0.0 else 1.0
 	
 	for i in range(n):
 		sample_array[i] = (sample_array[i] - vmin) * d
@@ -106,5 +106,5 @@ static func filter(sample_array: Array[float], lowcut: int, highcut: int):
 		minimum == 0.000001
 		
 	for i in range(sample_array.size()):
-		if i <= lowcut || i >= highcut:
+		if sample_array[i] <= lowcut || sample_array[i] >= highcut:
 			sample_array[i] = minimum

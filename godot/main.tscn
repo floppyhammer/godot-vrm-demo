@@ -47,8 +47,6 @@ offset_right = 0.0
 offset_bottom = 0.0
 grow_horizontal = 0
 grow_vertical = 0
-
-[node name="AudioStreamWav" parent="LipSync" index="1"]
 stream = ExtResource("2_v8b56")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -91,5 +89,3 @@ visible = false
 [connection signal="updated" from="LipSyncRs" to="." method="_on_lip_sync_rs_updated"]
 [connection signal="vowel_estimated" from="LipSync" to="." method="_on_lip_sync_vowel_estimated"]
 [connection signal="pressed" from="CanvasLayer/StartTalking" to="." method="_on_start_talking_pressed"]
-
-[editable path="LipSync"]
