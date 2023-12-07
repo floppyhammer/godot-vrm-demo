@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dy32mxsae23yv"
 path.s3tc="res://.godot/imported/sophia_eye_open_normal.png-571df57fa2f798f1d772e55c54afbd0c.s3tc.ctex"
+path.etc2="res://.godot/imported/sophia_eye_open_normal.png-571df57fa2f798f1d772e55c54afbd0c.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={}
@@ -13,7 +14,7 @@ generator_parameters={}
 [deps]
 
 source_file="res://models/sophia/sophia_eye_open_normal.png"
-dest_files=["res://.godot/imported/sophia_eye_open_normal.png-571df57fa2f798f1d772e55c54afbd0c.s3tc.ctex"]
+dest_files=["res://.godot/imported/sophia_eye_open_normal.png-571df57fa2f798f1d772e55c54afbd0c.s3tc.ctex", "res://.godot/imported/sophia_eye_open_normal.png-571df57fa2f798f1d772e55c54afbd0c.etc2.ctex"]
 
 [params]
 

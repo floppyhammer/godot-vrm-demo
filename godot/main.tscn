@@ -17,7 +17,6 @@ sky_material = SubResource("PanoramaSkyMaterial_axekh")
 [sub_resource type="Environment" id="Environment_tsai3"]
 background_mode = 2
 sky = SubResource("Sky_rxnka")
-sdfgi_enabled = true
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_l7c0q")
