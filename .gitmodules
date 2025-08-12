@@ -1,0 +1,3 @@
+[submodule "rust/real-time-lip-sync-gd"]
+	path = rust/real-time-lip-sync-gd
+	url = https://github.com/floppyhammer/real-time-lip-sync-gd.git

@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://bbjovavx8l0y8"]
+[gd_scene load_steps=2 format=3 uid="uid://bbjovavx8l0y8"]
 
 [ext_resource type="PackedScene" uid="uid://ds6eaclr7yb4u" path="res://models/NEOKET/NEOKET ver-.vrm" id="1_stdug"]
-[ext_resource type="AnimationLibrary" uid="uid://dqelved1c1iql" path="res://assets/motions/standing idle.glb" id="2_1jlcu"]
 
 [node name="NEOKET ver-" instance=ExtResource("1_stdug")]
 
@@ -58,10 +57,7 @@ bones/77/rotation = Quaternion(-0.0990897, 0.67017, -0.733381, -0.0566242)
 bones/78/rotation = Quaternion(-0.00833547, 0.999661, 0.0240893, 0.00531647)
 
 [node name="Head" parent="GeneralSkeleton" index="4"]
-transform = Transform3D(0.999901, 0.00243438, -0.0138287, -0.00220177, 0.999856, 0.0168121, 0.0138676, -0.01678, 0.999763, 0.0290836, 1.42698, -0.00656907)
+transform = Transform3D(0.9999014, 0.0024344746, -0.013828559, -0.0022018498, 0.99985623, 0.016812027, 0.01386752, -0.01677996, 0.9997631, 0.029083598, 1.4269769, -0.0065690097)
 
 [node name="AnimationPlayer2" type="AnimationPlayer" parent="." index="3"]
-libraries = {
-"standing idle": ExtResource("2_1jlcu")
-}
 autoplay = "standing idle/Armature|mixamo_com|Layer0"

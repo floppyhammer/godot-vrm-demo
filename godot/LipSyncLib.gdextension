@@ -1,7 +1,10 @@
 [configuration]
 entry_symbol = "gdext_rust_init"
 compatibility_minimum = 4.1
+reloadable = true
 
 [libraries]
 windows.debug.x86_64 = "res://../rust/real-time-lip-sync-gd/target/debug/real_time_lip_sync_gd.dll"
 windows.release.x86_64 = "res://../rust/real-time-lip-sync-gd/target/release/real_time_lip_sync_gd.dll"
+linux.debug.x86_64 = "res://../rust/real-time-lip-sync-gd/target/debug/libreal_time_lip_sync_gd.so"
+linux.release.x86_64 = "res://../rust/real-time-lip-sync-gd/target/release/libreal_time_lip_sync_gd.so"
